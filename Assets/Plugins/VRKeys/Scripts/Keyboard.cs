@@ -117,6 +117,8 @@ namespace VRKeys
         [NonSerialized]
         public GameObject playerSpace;
 
+        public Transform player;
+
         public GameObject leftHand;
 
         public GameObject rightHand;
@@ -208,6 +210,8 @@ namespace VRKeys
             {
                 keysParent.gameObject.SetActive(true);
             }
+
+            playerSpace.transform.localPosition = player.position;
 
             EnableInput();
 
