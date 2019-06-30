@@ -5,12 +5,13 @@ using VRKeys;
 
 public class OpenKeyboard : MonoBehaviour
 {
-    Keyboard keyboard;
+    public Keyboard keyboard;
+    public Transform player;
     private bool isKeyboardOpen = false;
     // Start is called before the first frame update
     void Start()
     {
-        keyboard = GetComponent<Keyboard>();
+        keyboard.Disable();
     }
 
     // Update is called once per frame
@@ -22,6 +23,9 @@ public class OpenKeyboard : MonoBehaviour
             isKeyboardOpen = !isKeyboardOpen;
             if (isKeyboardOpen)
             {
+                Debug.Log("avtive");
+                keyboard.playerSpace.transform.localPosition = player.position;
+                keyboard.playerSpace.transform.localRotation = player.rotation;
                 keyboard.Enable();
             }
             else
