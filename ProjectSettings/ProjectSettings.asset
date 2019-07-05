@@ -162,7 +162,7 @@ PlayerSettings:
     Android: com.shinyoshiaki.questrdp
   buildNumber: {}
   AndroidBundleVersionCode: 1
-  AndroidMinSdkVersion: 20
+  AndroidMinSdkVersion: 25
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 0
   aotOptions: 
