@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Example Scene.unity
+    path: Assets/QuestRdp/Scenes/Example Scene.unity
     guid: a34a374857facec4b8beb240f59fbe4f
   m_configObjects: {}

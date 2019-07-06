@@ -1,0 +1,12 @@
+[uDD::Log][2019-07-06 11:32:59] Start
+[uDD::Log][2019-07-06 11:32:59] Monitor::Initialize() => OK.
+[uDD::Log][2019-07-06 11:32:59]     ID    : 0
+[uDD::Log][2019-07-06 11:32:59]     Size  : (1920, 1080)
+[uDD::Log][2019-07-06 11:32:59]     DPI   : (112, 114)
+[uDD::Log][2019-07-06 11:32:59]     Rot   : Landscape
+[uDD::Log][2019-07-06 11:32:59] Monitor::Initialize() => OK.
+[uDD::Log][2019-07-06 11:32:59]     ID    : 1
+[uDD::Log][2019-07-06 11:32:59]     Size  : (1366, 768)
+[uDD::Log][2019-07-06 11:32:59]     DPI   : (84, 84)
+[uDD::Log][2019-07-06 11:32:59]     Rot   : Landscape
+[uDD::Log][2019-07-06 11:33:48] Stop
