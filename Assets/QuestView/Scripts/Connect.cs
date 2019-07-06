@@ -16,6 +16,8 @@ public class Connect : MonoBehaviour
 
     public IOnRemoteVideo OnRemoteVideo;
 
+    bool connected = false;
+
     public void StartConnect(string ipAddress)
     {
 
@@ -47,11 +49,13 @@ public class Connect : MonoBehaviour
     {
         Debug.Log("connect");
         signaling.peer.SendDataViaDataChannel("test from unity");
+        connected = true;
     }
 
     public void Send(string str)
     {
-        signaling.peer.SendDataViaDataChannel(str);
+        if (connected)
+            signaling.peer.SendDataViaDataChannel(str);
     }
 
     void OnData(string s)
