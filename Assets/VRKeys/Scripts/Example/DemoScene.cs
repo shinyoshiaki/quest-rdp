@@ -23,7 +23,8 @@ namespace VRKeys
     {
         public Keyboard keyboard;
 
-        public Connect connect;
+        public GameObject connect;
+        public GameObject player;
 
         private void OnEnable()
         {
@@ -85,7 +86,9 @@ namespace VRKeys
         public void HandleSubmit(string text)
         {
             Debug.Log("input " + text);
-            connect.StartConnect(text);
+            var obj = Instantiate(connect, player.transform.position + Vector3.forward * 3, player.transform.rotation);
+            var peer = obj.GetComponent<Connect>();
+            peer.StartConnect(text);
             keyboard.DisableInput();
             StartCoroutine(SubmitEmail(text));
         }
