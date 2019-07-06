@@ -31,14 +31,13 @@ namespace VRKeys
             keyboard.Enable();
             keyboard.SetPlaceholderMessage("Please enter your email address");
 
-            keyboard.OnUpdate.AddListener(HandleUpdate);
             keyboard.OnSubmit.AddListener(HandleSubmit);
             keyboard.OnCancel.AddListener(HandleCancel);
         }
 
         private void OnDisable()
         {
-            keyboard.OnUpdate.RemoveListener(HandleUpdate);
+
             keyboard.OnSubmit.RemoveListener(HandleSubmit);
             keyboard.OnCancel.RemoveListener(HandleCancel);
 
@@ -78,11 +77,6 @@ namespace VRKeys
             }
         }
 
-        public void HandleUpdate(string text)
-        {
-            keyboard.HideValidationMessage();
-        }
-
         public void HandleSubmit(string text)
         {
             Debug.Log("input " + text);
@@ -110,7 +104,6 @@ namespace VRKeys
             yield return new WaitForSeconds(1f);
             keyboard.ShowSuccessMessage("Lots of spam sent to " + email);
             yield return new WaitForSeconds(1f);
-            keyboard.HideSuccessMessage();
             keyboard.SetText("");
             keyboard.EnableInput();
         }

@@ -41,7 +41,6 @@ public class QrdpMousePointer : MonoBehaviour
     // Update is called once per frame
     void DesktopRay()
     {
-        Debug.Log("a");
         var forward = gripTransform.forward;
 
         var ray = new Ray();

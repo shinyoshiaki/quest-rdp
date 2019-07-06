@@ -40,15 +40,11 @@ namespace VRKeys
 
         public TextMeshProUGUI displayText;
 
-        public GameObject validationNotice;
-
         public TextMeshProUGUI validationMessage;
-
-        public GameObject infoNotice;
 
         public TextMeshProUGUI infoMessage;
 
-        public GameObject successNotice;
+
 
         public TextMeshProUGUI successMessage;
 
@@ -114,9 +110,6 @@ namespace VRKeys
         /// </summary>
         public UnityEvent OnCancel = new UnityEvent();
 
-        [NonSerialized]
-        public GameObject playerSpace;
-
         public Transform player;
 
         public GameObject leftHand;
@@ -134,13 +127,9 @@ namespace VRKeys
         /// </summary>
         private IEnumerator Start()
         {
-            playerSpace = new GameObject("Play Space");
+
 
             yield return StartCoroutine(DoSetLanguage(keyboardLayout));
-
-            validationNotice.SetActive(false);
-            infoNotice.SetActive(false);
-            successNotice.SetActive(false);
 
             UpdateDisplayText();
             PlaceholderVisibility();
@@ -148,15 +137,16 @@ namespace VRKeys
             initialized = true;
         }
 
-        private void Update()
-        {
-
-        }
-
         private void PositionAndAttachMallets()
         {
-            transform.SetParent(playerSpace.transform, false);
-            transform.localPosition = positionRelativeToUser;
+            var offset = new Vector3(0.1f, -0.5f, 1.5f);
+            var position = player.transform.position +
+               player.transform.up * offset.y +
+               player.transform.right * offset.x +
+               player.transform.forward * offset.z;
+            transform.position = position;
+            transform.rotation = player.transform.rotation;
+            // transform.position = player.transform.position + Vector3.back * 1;
 
             leftMallet.transform.SetParent(leftHand.transform);
             leftMallet.transform.localPosition = Vector3.zero;
@@ -212,8 +202,6 @@ namespace VRKeys
             {
                 keysParent.gameObject.SetActive(true);
             }
-
-            playerSpace.transform.localPosition = player.position;
 
             EnableInput();
 
@@ -444,9 +432,7 @@ namespace VRKeys
         public void ShowValidationMessage(string message)
         {
             validationMessage.text = message;
-            validationNotice.SetActive(true);
-            infoNotice.SetActive(false);
-            successNotice.SetActive(false);
+
         }
 
         /// <summary>
@@ -456,9 +442,7 @@ namespace VRKeys
         public void ShowInfoMessage(string message)
         {
             infoMessage.text = message;
-            validationNotice.SetActive(false);
-            infoNotice.SetActive(true);
-            successNotice.SetActive(false);
+
         }
 
         /// <summary>
@@ -468,34 +452,12 @@ namespace VRKeys
         public void ShowSuccessMessage(string message)
         {
             successMessage.text = message;
-            validationNotice.SetActive(false);
-            infoNotice.SetActive(false);
-            successNotice.SetActive(true);
+
         }
 
-        /// <summary>
-        /// Hide the validation notice.
-        /// </summary>
-        public void HideValidationMessage()
-        {
-            validationNotice.SetActive(false);
-        }
 
-        /// <summary>
-        /// Hide the info notice.
-        /// </summary>
-        public void HideInfoMessage()
-        {
-            infoNotice.SetActive(false);
-        }
 
-        /// <summary>
-        /// Hide the success notice.
-        /// </summary>
-        public void HideSuccessMessage()
-        {
-            successNotice.SetActive(false);
-        }
+
 
         /// <summary>
         /// Setup the keys.
