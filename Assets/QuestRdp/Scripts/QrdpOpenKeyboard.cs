@@ -24,8 +24,6 @@ public class QrdpOpenKeyboard : MonoBehaviour
             if (isKeyboardOpen)
             {
                 Debug.Log("avtive");
-                keyboard.playerSpace.transform.localPosition = player.position;
-                keyboard.playerSpace.transform.localRotation = player.rotation;
                 keyboard.Enable();
             }
             else
