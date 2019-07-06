@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
+using System;
 
 public class QrdpMousePointer : MonoBehaviour
 {
@@ -24,6 +26,10 @@ public class QrdpMousePointer : MonoBehaviour
     void Start()
     {
         pos = new GameObject();
+        Observable.Interval(TimeSpan.FromMilliseconds(1000 / 30)).Subscribe(l =>
+        {
+            DesktopRay();
+        }).AddTo(this);
     }
 
     public Transform gripTransform
@@ -33,8 +39,9 @@ public class QrdpMousePointer : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    void DesktopRay()
     {
+        Debug.Log("a");
         var forward = gripTransform.forward;
 
         var ray = new Ray();
@@ -54,9 +61,6 @@ public class QrdpMousePointer : MonoBehaviour
                 mouse.Move(hitPoint.x, hitPoint.y);
             }
         }
-
-
-
 
         preRayDirection_ = hit ? ray.direction : forward;
     }

@@ -19,7 +19,8 @@ public class QrdpZoom : MonoBehaviour
     {
         var x = target.transform.localScale.x / def.x;
         var y = target.transform.localScale.x / def.x;
+        var z = target.transform.localScale.x / def.x;
 
-        transform.localScale = new Vector3(mydef.x * x, mydef.y * y, mydef.z);
+        transform.localScale = new Vector3(mydef.x * x, mydef.y * y, mydef.z * z);
     }
 }
