@@ -6,6 +6,8 @@ using System;
 
 public class QrdpMousePointer : MonoBehaviour
 {
+    public GameObject reticle;
+
     [SerializeField]
     Transform grip = null;
 
@@ -28,8 +30,11 @@ public class QrdpMousePointer : MonoBehaviour
         pos = new GameObject();
         Observable.Interval(TimeSpan.FromMilliseconds(1000 / 30)).Subscribe(l =>
         {
-            DesktopRay();
+            var pos = DesktopRay();
+            if (pos.mouse)
+                pos.mouse.Move(pos.x, pos.y);
         }).AddTo(this);
+        reticle = Instantiate(reticle);
     }
 
     public Transform gripTransform
@@ -39,8 +44,11 @@ public class QrdpMousePointer : MonoBehaviour
 
 
     // Update is called once per frame
-    void DesktopRay()
+    (float x, float y, QrdpMouseControll mouse) DesktopRay()
     {
+        float x = 0; float y = 0;
+        QrdpMouseControll mouse = null;
+
         var forward = gripTransform.forward;
 
         var ray = new Ray();
@@ -53,15 +61,22 @@ public class QrdpMousePointer : MonoBehaviour
         if (hit)
         {
             var obj = targetHit_.collider.gameObject;
-            var mouse = obj.GetComponent<QrdpMouseControll>();
+            mouse = obj.GetComponent<QrdpMouseControll>();
             if (mouse)
             {
                 var hitPoint = new Vector2(targetHit_.textureCoord.x, targetHit_.textureCoord.y);
-                mouse.Move(hitPoint.x, hitPoint.y);
+                x = hitPoint.x;
+                y = hitPoint.y;
+
+                reticle.transform.rotation = Quaternion.LookRotation(targetHit_.normal);
+                reticle.transform.position = targetHit_.point + (-targetHit_.normal * 0.01f);
+
             }
         }
 
         preRayDirection_ = hit ? ray.direction : forward;
+
+        return (x, y, mouse);
     }
 
 }

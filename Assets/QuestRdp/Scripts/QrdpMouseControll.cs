@@ -6,6 +6,9 @@ using Utf8Json;
 public class QrdpMouseControll : MonoBehaviour
 {
     Connect connect;
+    public float x;
+    public float y;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,9 +17,20 @@ public class QrdpMouseControll : MonoBehaviour
 
     void Update()
     {
-
-
+        bool IsButtonXPressed = OVRInput.GetDown(OVRInput.RawButton.RIndexTrigger);
+        if (IsButtonXPressed)
+        {
+            StartCoroutine(Click());
+        }
     }
+
+    IEnumerator Click()
+    {
+        SendMove(x, y);
+        yield return new WaitForSeconds(0.05f);
+        SendClick();
+    }
+
 
     class MouseMovePayload
     {
@@ -30,7 +44,7 @@ public class QrdpMouseControll : MonoBehaviour
         public MouseMovePayload payload;
     }
 
-    public void Move(float x, float y)
+    public void SendMove(float x, float y)
     {
         var data = new MouseMove
         {
@@ -43,19 +57,19 @@ public class QrdpMouseControll : MonoBehaviour
         };
         var json = JsonSerializer.ToJsonString(data);
         connect.Send(json);
+    }
 
-        bool IsButtonXPressed = OVRInput.GetDown(OVRInput.RawButton.RIndexTrigger);
-        if (IsButtonXPressed)
-        {
-            Click();
-        }
+    public void Move(float _x, float _y)
+    {
+        x = _x;
+        y = _y;
     }
 
     class MouseClick
     {
         public string type;
     }
-    public void Click()
+    void SendClick()
     {
         Debug.Log("clicked");
         var data = new MouseClick
