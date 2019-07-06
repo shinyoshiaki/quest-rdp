@@ -929,6 +929,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3c2c7e79cb5c5f43b0e3e68f5b41a64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reticle: {fileID: 1670910706049606806, guid: 0b046d73240448e4490e24a32a3d6613, type: 3}
   grip: {fileID: 0}
   maxGrabDistance: 10
   layerMask:
