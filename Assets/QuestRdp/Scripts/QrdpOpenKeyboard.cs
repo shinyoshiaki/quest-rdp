@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using VRKeys;
 
-public class OpenKeyboard : MonoBehaviour
+public class QrdpOpenKeyboard : MonoBehaviour
 {
     public Keyboard keyboard;
     public Transform player;
