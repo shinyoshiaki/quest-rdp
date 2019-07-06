@@ -139,7 +139,7 @@ namespace VRKeys
 
         private void PositionAndAttachMallets()
         {
-            var offset = new Vector3(0.1f, -0.5f, 1.5f);
+            var offset = new Vector3(0.1f, 0f, 1.8f);
             var position = player.transform.position +
                player.transform.up * offset.y +
                player.transform.right * offset.x +
