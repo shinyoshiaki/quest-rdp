@@ -7,6 +7,7 @@ using System;
 public class QrdpMousePointer : MonoBehaviour
 {
     public GameObject reticle;
+    public QrdpKeyboardManager keyboardManager;
 
     [SerializeField]
     Transform grip = null;
@@ -22,6 +23,7 @@ public class QrdpMousePointer : MonoBehaviour
     RaycastHit targetHit_;
 
     GameObject pos;
+    QrdpRemoteScroll remoteInput;
 
 
     // Start is called before the first frame update
@@ -35,6 +37,7 @@ public class QrdpMousePointer : MonoBehaviour
                 pos.mouse.Move(pos.x, pos.y);
         }).AddTo(this);
         reticle = Instantiate(reticle);
+        remoteInput = GetComponent<QrdpRemoteScroll>();
     }
 
     public Transform gripTransform
@@ -71,6 +74,16 @@ public class QrdpMousePointer : MonoBehaviour
                 reticle.transform.rotation = Quaternion.LookRotation(targetHit_.normal);
                 reticle.transform.position = targetHit_.point + (-targetHit_.normal * 0.01f);
 
+            }
+            var connect = obj.GetComponent<Connect>();
+            if (connect)
+            {
+                remoteInput.SetConnectContext(connect);
+            }
+            var keyboard = obj.GetComponentInParent<QrdpMonitorManager>();
+            if (keyboard)
+            {
+                keyboard.SetKeyboardManagerContext(keyboardManager);
             }
         }
 
