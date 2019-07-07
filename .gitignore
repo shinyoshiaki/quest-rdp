@@ -39,7 +39,7 @@ Assets/QuestRdp/Models*
 
 # Depend
 Assets/Oculus*
-Assets/QuestView*
+#Assets/QuestView*
 Assets/MeshBaker*
 Assets/SimplestMeshBaker*
 Assets/TextMesh Pro*
