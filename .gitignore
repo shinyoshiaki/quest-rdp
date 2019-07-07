@@ -38,8 +38,21 @@ sysinfo.txt
 Assets/QuestRdp/Models*
 
 # Depend
-Assets/Oculus*
+Assets/Oculus.meta
+Assets/Oculus/*
+!Assets/Oculus/VR/
+Assets/Oculus/VR/*
+!Assets/Oculus/VR/Scripts/
+Assets/Oculus/VR/Scripts/*
+!Assets/Oculus/VR/Scripts/Util/
+Assets/Oculus/VR/Scripts/Util/*
+!Assets/Oculus/VR/Scripts/Util/OVRInputModule.cs
+
+Assets/QuestView*
 Assets/MeshBaker*
 Assets/SimplestMeshBaker*
 Assets/TextMesh Pro*
 Assets/AllSkyFree*
+Assets/VrGrabber*
+Assets/UniRX*
+Assets/Utf8Json*
