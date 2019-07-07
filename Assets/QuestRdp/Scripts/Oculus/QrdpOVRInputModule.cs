@@ -22,7 +22,7 @@ namespace UnityEngine.EventSystems
     /// <summary>
     /// VR extension of PointerInputModule which supports gaze and controller pointing.
     /// </summary>
-    public class OVRInputModule : PointerInputModule
+    public class QrdpOVRInputModule : PointerInputModule
     {
         [Tooltip("Object which points with Z axis. E.g. CentreEyeAnchor from OVRCameraRig")]
         public Transform rayTransform;
@@ -90,7 +90,7 @@ namespace UnityEngine.EventSystems
         private Vector2 m_LastMousePosition;
         private Vector2 m_MousePosition;
 
-        protected OVRInputModule()
+        protected QrdpOVRInputModule()
         { }
 
 #if UNITY_EDITOR
@@ -856,8 +856,8 @@ namespace UnityEngine.EventSystems
         /// <returns></returns>
         virtual protected PointerEventData.FramePressState GetGazeButtonState()
         {
-            var pressed = Input.GetKeyDown(gazeClickKey) || OVRInput.GetDown(OVRInput.RawButton.RIndexTrigger);
-            var released = Input.GetKeyUp(gazeClickKey) || OVRInput.GetUp(OVRInput.RawButton.RIndexTrigger);
+            var pressed = Input.GetKeyDown(gazeClickKey) || OVRInput.Get(OVRInput.RawButton.RIndexTrigger);
+            var released = Input.GetKeyUp(gazeClickKey) || OVRInput.Get(OVRInput.RawButton.RIndexTrigger);
 
 #if UNITY_ANDROID && !UNITY_EDITOR
             // On Gear VR the mouse button events correspond to touch pad events. We only use these as gaze pointer clicks
