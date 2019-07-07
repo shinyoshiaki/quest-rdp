@@ -38,7 +38,7 @@ sysinfo.txt
 Assets/QuestRdp/Models*
 
 # Depend
-Assets/Oculus/*
+Assets/Oculus*
 !Assets/Oculus/VR/
 Assets/Oculus/VR/*
 !Assets/Oculus/VR/Scripts/
