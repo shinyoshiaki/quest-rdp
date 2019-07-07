@@ -1,6 +1,7 @@
 # WIP
 
-# quest-rdp
+# quest-rdp  
+QuestView(https://github.com/shinyoshiaki/quest-view) を使って開発中のOculusQuest向けリモートデスクトップアプリ
 
 # depend
 quest-view : https://github.com/shinyoshiaki/quest-view  
