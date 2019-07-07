@@ -17,19 +17,10 @@ using TMPro;
 namespace VRKeys
 {
 
-    /// <summary>
-    /// Keyboard input system for use with NewtonVR. To use, drop the VRKeys prefab
-    /// into your scene and activate as needed. Listen for OnUpdate and OnSubmit events,
-    /// and set the text via SetText(string).
-    ///
-    /// Input validation can be done during OnUpdate and OnSubmit events by calling
-    /// ShowValidationMessage(msg) and HideValidationMessage(). The keyboard does not
-    /// automatically hide OnSubmit, but rather you should call SetActive(false) when
-    /// you have finished validating the submitted text.
-    /// </summary>
+
     public class Keyboard : MonoBehaviour
     {
-        public Vector3 positionRelativeToUser = new Vector3(0f, 1.35f, 2f);
+
 
         public KeyboardLayout keyboardLayout = KeyboardLayout.Qwerty;
 
@@ -93,7 +84,8 @@ namespace VRKeys
         [Serializable]
         public class KeyboardSubmitEvent : UnityEvent<string> { }
 
-        [Space(15)]
+
+
 
         /// <summary>
         /// Listen for events whenever the text changes.
@@ -109,6 +101,12 @@ namespace VRKeys
         /// Listen for events when Cancel() is called.
         /// </summary>
         public UnityEvent OnCancel = new UnityEvent();
+
+        public class KeyboardAddCharacterEvent : UnityEvent<string> { }
+        public KeyboardAddCharacterEvent OnAddChar = new KeyboardAddCharacterEvent();
+
+        public class KeyboardBackspaceEvent : UnityEvent { }
+        public KeyboardBackspaceEvent OnBackspace = new KeyboardBackspaceEvent();
 
         public Transform player;
 
@@ -127,8 +125,6 @@ namespace VRKeys
         /// </summary>
         private IEnumerator Start()
         {
-
-
             yield return StartCoroutine(DoSetLanguage(keyboardLayout));
 
             UpdateDisplayText();
@@ -139,14 +135,13 @@ namespace VRKeys
 
         private void PositionAndAttachMallets()
         {
-            var offset = new Vector3(0.1f, 0f, 1.8f);
+            var offset = new Vector3(0f, 0f, 1.8f);
             var position = player.transform.position +
                player.transform.up * offset.y +
                player.transform.right * offset.x +
                player.transform.forward * offset.z;
             transform.position = position;
             transform.rotation = player.transform.rotation;
-            // transform.position = player.transform.position + Vector3.back * 1;
 
             leftMallet.transform.SetParent(leftHand.transform);
             leftMallet.transform.localPosition = Vector3.zero;
@@ -161,7 +156,7 @@ namespace VRKeys
             rightMallet.SetActive(true);
 
             keysParent.localEulerAngles = new Vector3(-30, 0, 0);
-            keysParent.localPosition = new Vector3(-0.2f, -0.374431f, -0.7368833f);
+            keysParent.localPosition = new Vector3(0f, -0.374431f, -0.7368833f);
         }
 
         private void DetachMallets()
@@ -258,6 +253,7 @@ namespace VRKeys
             PlaceholderVisibility();
 
             OnUpdate.Invoke(text);
+            OnAddChar.Invoke(character);
 
             if (shifted && character != "" && character != " ")
             {
@@ -360,6 +356,7 @@ namespace VRKeys
             PlaceholderVisibility();
 
             OnUpdate.Invoke(text);
+            OnBackspace.Invoke();
         }
 
         /// <summary>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utf8Json;
 
-public class QrdpRemoteInput : MonoBehaviour
+public class QrdpRemoteScroll : MonoBehaviour
 {
     private Connect connect;
 
