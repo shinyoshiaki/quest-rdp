@@ -36,7 +36,10 @@ sysinfo.txt
 *.unitypackage
 
 Assets/QuestRdp/Models*
+
+# Depend
 Assets/Oculus*
 Assets/MeshBaker*
 Assets/SimplestMeshBaker*
 Assets/TextMesh Pro*
+Assets/AllSkyFree*
