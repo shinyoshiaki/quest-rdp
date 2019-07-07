@@ -29,7 +29,7 @@ public class Connect : MonoBehaviour
         utilityClass.CallStatic("InitializePeerConncectionFactory", new object[1] { activity });
 #endif
 
-        Observable.Timer(TimeSpan.FromSeconds(2)).Subscribe(_ => Join());
+        Observable.Timer(TimeSpan.FromSeconds(1)).Subscribe(_ => Join());
 
         Debug.Log("start");
         ws = new WebSocket("ws://" + ipAddress + ":8080");

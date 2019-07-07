@@ -1,27 +1,15 @@
 ﻿using System;
 using UnityEngine;
-
+using UniRx;
 public class WebRtcVideoPlayer : MonoBehaviour
 {
 
     private Texture2D tex;
-    FrameQueue frameQueue = new FrameQueue(2);
-    float lastUpdateTime;
 
     public Connect connect;
 
-    [SerializeField]
-    private bool _playing;
-    [SerializeField]
-    private bool _failed;
-    [SerializeField]
-    private float _fpsLoad;
-    [SerializeField]
-    private float _fpsShow;
-    [SerializeField]
-    private float _fpsSkip;
+    FramePacket framePacket;
 
-    // Use this for initialization
     void Start()
     {
         tex = new Texture2D(2, 2);
@@ -30,29 +18,12 @@ public class WebRtcVideoPlayer : MonoBehaviour
         tex.Apply();
         GetComponent<Renderer>().material.mainTexture = tex;
         connect.OnRemoteVideo += OnI420RemoteFrameReady;
+
+        Observable.Interval(TimeSpan.FromMilliseconds(1000 / 30)).Subscribe(l =>
+       {
+           ProcessFrameBuffer(framePacket);
+       }).AddTo(this);
     }
-
-    FramePacket framePacket;
-
-    // Update is called once per frame
-    void Update()
-    {
-        ProcessFrameBuffer(framePacket);
-    }
-
-    // private void TryProcessFrame()
-    // {
-    //     if (frameQueue != null)
-    //     {
-    //         FramePacket packet = frameQueue.Pop();
-    //         //Debug.Log((packet == null ? "no frame to consume." : "frame consumed.") + "framesCount : " + frameQueue.Count);
-    //         if (packet != null)
-    //         {
-    //             ProcessFrameBuffer(packet);
-    //             frameQueue.Pool(packet);
-    //         }
-    //     }
-    // }
 
     private void ProcessFrameBuffer(FramePacket packet)
     {
@@ -71,6 +42,7 @@ public class WebRtcVideoPlayer : MonoBehaviour
 
         tex.Apply();
         GetComponent<Renderer>().material.mainTexture = tex;
+        framePacket = null;
     }
 
     public void OnI420RemoteFrameReady(int id,
@@ -78,8 +50,7 @@ public class WebRtcVideoPlayer : MonoBehaviour
      int strideY, int strideU, int strideV, int strideA,
      uint width, uint height)
     {
-        //Debug.Log("OnI420RemoteFrameReady called! w=" + width + " h=" + height + " thread:" + Thread.CurrentThread.ManagedThreadId);
-        FramePacket packet = frameQueue.GetDataBufferWithoutContents((int)(width * height * 4));
+        FramePacket packet = GetNewBuffer((int)(width * height * 4));
         if (packet == null)
         {
             Debug.LogError("OnI420RemoteFrameReady: FramePacket is null!");
@@ -88,8 +59,13 @@ public class WebRtcVideoPlayer : MonoBehaviour
         CopyYuvToBuffer(dataY, dataU, dataV, strideY, strideU, strideV, width, height, packet.Buffer);
         packet.width = (int)width;
         packet.height = (int)height;
-        // frameQueue.Push(packet);
         framePacket = packet;
+    }
+
+    private FramePacket GetNewBuffer(int neededSize)
+    {
+        FramePacket packet = new FramePacket((int)(neededSize * 1.2));
+        return packet;
     }
 
     void CopyYuvToBuffer(IntPtr dataY, IntPtr dataU, IntPtr dataV,
