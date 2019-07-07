@@ -22,6 +22,7 @@ public class QrdpMousePointer : MonoBehaviour
     RaycastHit targetHit_;
 
     GameObject pos;
+    QrdpRemoteInput remoteInput;
 
 
     // Start is called before the first frame update
@@ -35,6 +36,7 @@ public class QrdpMousePointer : MonoBehaviour
                 pos.mouse.Move(pos.x, pos.y);
         }).AddTo(this);
         reticle = Instantiate(reticle);
+        remoteInput = GetComponent<QrdpRemoteInput>();
     }
 
     public Transform gripTransform
@@ -71,6 +73,11 @@ public class QrdpMousePointer : MonoBehaviour
                 reticle.transform.rotation = Quaternion.LookRotation(targetHit_.normal);
                 reticle.transform.position = targetHit_.point + (-targetHit_.normal * 0.01f);
 
+            }
+            var connect = obj.GetComponent<Connect>();
+            if (connect)
+            {
+                remoteInput.SetConnectContext(connect);
             }
         }
 

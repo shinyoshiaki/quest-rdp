@@ -22,7 +22,7 @@ namespace UnityEngine.EventSystems
     /// <summary>
     /// VR extension of PointerInputModule which supports gaze and controller pointing.
     /// </summary>
-    public class OVRInputModule : PointerInputModule
+    public class QrdpOVRInputModule : PointerInputModule
     {
         [Tooltip("Object which points with Z axis. E.g. CentreEyeAnchor from OVRCameraRig")]
         public Transform rayTransform;
@@ -90,7 +90,7 @@ namespace UnityEngine.EventSystems
         private Vector2 m_LastMousePosition;
         private Vector2 m_MousePosition;
 
-        protected OVRInputModule()
+        protected QrdpOVRInputModule()
         {}
 
 #if UNITY_EDITOR
