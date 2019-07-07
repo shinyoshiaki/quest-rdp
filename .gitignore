@@ -35,6 +35,12 @@ sysinfo.txt
 *.apk
 *.unitypackage
 
-Assets/Assets
-Assets/Models
-Assets/Plugins/QuestView
+Assets/QuestRdp/Models*
+
+# Depend
+Assets/Oculus
+Assets/MeshBaker
+Assets/SimplestMeshBaker
+Assets/TextMesh Pro
+Assets/AllSkyFree
+Assets/VrGrabber
