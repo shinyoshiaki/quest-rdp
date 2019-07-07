@@ -25,6 +25,8 @@ public class QrdpKeyboardManager : MonoBehaviour
 
         keyboard.OnSubmit.AddListener(HandleSubmit);
         keyboard.OnCancel.AddListener(HandleCancel);
+        keyboard.OnAddChar.AddListener(HandleAddChar);
+        keyboard.OnBackspace.AddListener(HandleBackspace);
     }
 
     private void OnDisable()
@@ -32,6 +34,8 @@ public class QrdpKeyboardManager : MonoBehaviour
 
         keyboard.OnSubmit.RemoveListener(HandleSubmit);
         keyboard.OnCancel.RemoveListener(HandleCancel);
+        keyboard.OnAddChar.RemoveListener(HandleAddChar);
+        keyboard.OnBackspace.RemoveListener(HandleBackspace);
 
         keyboard.Disable();
     }
@@ -40,14 +44,19 @@ public class QrdpKeyboardManager : MonoBehaviour
     {
         if (OVRInput.GetDown(OVRInput.Button.Three))
         {
-            if (keyboard.disabled)
-            {
-                keyboard.Enable();
-            }
-            else
-            {
-                keyboard.Disable();
-            }
+            SwitchKeyboard();
+        }
+    }
+
+    public void SwitchKeyboard()
+    {
+        if (keyboard.disabled)
+        {
+            keyboard.Enable();
+        }
+        else
+        {
+            keyboard.Disable();
         }
     }
 
@@ -58,6 +67,16 @@ public class QrdpKeyboardManager : MonoBehaviour
 
         keyboard.DisableInput();
         StartCoroutine(SubmitEmail(text));
+    }
+
+    public void HandleAddChar(string c)
+    {
+        if (OnInput != null) OnInput(c);
+    }
+
+    public void HandleBackspace()
+    {
+        if (OnInput != null) OnInput("backspace");
     }
 
     public void Focus(IOnInput _OnInput, IOnEnter _OnEnter)

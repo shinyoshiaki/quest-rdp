@@ -84,7 +84,8 @@ namespace VRKeys
         [Serializable]
         public class KeyboardSubmitEvent : UnityEvent<string> { }
 
-        [Space(15)]
+
+
 
         /// <summary>
         /// Listen for events whenever the text changes.
@@ -100,6 +101,12 @@ namespace VRKeys
         /// Listen for events when Cancel() is called.
         /// </summary>
         public UnityEvent OnCancel = new UnityEvent();
+
+        public class KeyboardAddCharacterEvent : UnityEvent<string> { }
+        public KeyboardAddCharacterEvent OnAddChar = new KeyboardAddCharacterEvent();
+
+        public class KeyboardBackspaceEvent : UnityEvent { }
+        public KeyboardBackspaceEvent OnBackspace = new KeyboardBackspaceEvent();
 
         public Transform player;
 
@@ -246,6 +253,7 @@ namespace VRKeys
             PlaceholderVisibility();
 
             OnUpdate.Invoke(text);
+            OnAddChar.Invoke(character);
 
             if (shifted && character != "" && character != " ")
             {
@@ -348,6 +356,7 @@ namespace VRKeys
             PlaceholderVisibility();
 
             OnUpdate.Invoke(text);
+            OnBackspace.Invoke();
         }
 
         /// <summary>

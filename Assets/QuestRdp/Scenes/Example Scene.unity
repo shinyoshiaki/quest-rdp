@@ -1035,6 +1035,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reticle: {fileID: 1670910706049606806, guid: 0b046d73240448e4490e24a32a3d6613, type: 3}
+  keyboardManager: {fileID: 2042955740}
   grip: {fileID: 0}
   maxGrabDistance: 10
   layerMask:

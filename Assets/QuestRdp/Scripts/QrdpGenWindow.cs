@@ -34,9 +34,11 @@ public class QrdpGenWindow : MonoBehaviour
         peer.StartConnect(text);
     }
 
-    // Update is called once per frame
     void Update()
     {
-
+        if (OVRInput.GetDown(OVRInput.Button.Three))
+        {
+            Focus();
+        }
     }
 }
