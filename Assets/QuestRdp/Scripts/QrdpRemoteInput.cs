@@ -28,9 +28,8 @@ public class QrdpRemoteInput : MonoBehaviour
 
     void Update()
     {
-        if (OVRInput.GetDown(OVRInput.RawButton.RThumbstickUp))
+        if (OVRInput.Get(OVRInput.RawButton.RThumbstickUp))
         {
-            Debug.Log("右アナログスティックを上に倒した");
             var data = new Input
             {
                 type = "key",
@@ -39,9 +38,8 @@ public class QrdpRemoteInput : MonoBehaviour
             var json = JsonSerializer.ToJsonString(data);
             if (connect) connect.Send(json);
         }
-        if (OVRInput.GetDown(OVRInput.RawButton.RThumbstickDown))
+        if (OVRInput.Get(OVRInput.RawButton.RThumbstickDown))
         {
-            Debug.Log("右アナログスティックを下に倒した");
             var data = new Input
             {
                 type = "key",
