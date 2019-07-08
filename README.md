@@ -13,3 +13,12 @@ VrGrabber : https://github.com/hecomi/VrGrabber
 
 # 配信ソフト 
 https://github.com/shinyoshiaki/quest-view/releases/download/0.0.2/streamer.zip
+
+# ブランチ運用
+git-flow  
+master : ドキュメンテーション、ビルド、デプロイ    
+develop : 開発ブランチ  
+feature/* : 新機能実装  
+maintain/* : 修正、改善  
+featureとmaintainはdevelopにマージ  
+developはmasterにマージ
