@@ -18,15 +18,20 @@ public class QrdpKeyboardManager : MonoBehaviour
     public delegate void IOnEnter(string s);
     IOnEnter OnEnter;
 
-    private void OnEnable()
-    {
-        keyboard.Enable();
-        keyboard.SetPlaceholderMessage("");
+    bool first = true;
 
-        keyboard.OnSubmit.AddListener(HandleSubmit);
-        keyboard.OnCancel.AddListener(HandleCancel);
-        keyboard.OnAddChar.AddListener(HandleAddChar);
-        keyboard.OnBackspace.AddListener(HandleBackspace);
+    private void Enable()
+    {
+        if (first)
+        {
+            first = false;
+            keyboard.SetPlaceholderMessage("");
+
+            keyboard.OnSubmit.AddListener(HandleSubmit);
+            keyboard.OnCancel.AddListener(HandleCancel);
+            keyboard.OnAddChar.AddListener(HandleAddChar);
+            keyboard.OnBackspace.AddListener(HandleBackspace);
+        }
     }
 
     private void OnDisable()
@@ -40,19 +45,12 @@ public class QrdpKeyboardManager : MonoBehaviour
         keyboard.Disable();
     }
 
-    private void Update()
-    {
-        if (OVRInput.GetDown(OVRInput.Button.Three))
-        {
-            SwitchKeyboard();
-        }
-    }
-
     public void SwitchKeyboard()
     {
         if (keyboard.disabled)
         {
             keyboard.Enable();
+            Enable();
         }
         else
         {

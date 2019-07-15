@@ -8,7 +8,7 @@ public class QrdpActivateObject : MonoBehaviour
     public Transform baseTransform;
     public Vector3 offset = new Vector3(0, 0, 1);
 
-    public void Activate()
+    public void ActivateWithPosition()
     {
         obj.SetActive(true);
         var position = baseTransform.position +
@@ -17,5 +17,9 @@ public class QrdpActivateObject : MonoBehaviour
            baseTransform.forward * offset.z;
         obj.transform.position = position;
         obj.transform.rotation = baseTransform.rotation;
+    }
+
+    public void Activate(){
+        obj.SetActive(true);
     }
 }
