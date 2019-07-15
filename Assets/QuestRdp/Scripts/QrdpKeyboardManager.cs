@@ -66,7 +66,7 @@ public class QrdpKeyboardManager : MonoBehaviour
         if (OnEnter != null) OnEnter(text);
 
         keyboard.DisableInput();
-        StartCoroutine(SubmitEmail(text));
+        StartCoroutine(SubmitText());
     }
 
     public void HandleAddChar(string c)
@@ -85,7 +85,7 @@ public class QrdpKeyboardManager : MonoBehaviour
         OnEnter = _OnEnter;
     }
 
-    private IEnumerator SubmitEmail(string email)
+    private IEnumerator SubmitText()
     {
         keyboard.ShowInfoMessage("");
         yield return new WaitForSeconds(0.1f);

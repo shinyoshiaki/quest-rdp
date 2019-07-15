@@ -10,6 +10,7 @@ public class QrdpUiNumpad : MonoBehaviour
     public IOnEnter OnEnter;
 
     public Text viewText;
+    public GameObject root;
 
     void Start()
     {
@@ -49,6 +50,7 @@ public class QrdpUiNumpad : MonoBehaviour
               {
                   if (OnEnter != null) OnEnter(viewText.text);
                   Clear();
+                  Close();
               });
             }
         }
@@ -62,6 +64,11 @@ public class QrdpUiNumpad : MonoBehaviour
     public void Backspace()
     {
         viewText.text = viewText.text.Substring(0, viewText.text.Length - 1);
+    }
+
+    public void Close()
+    {
+        root.SetActive(false);
     }
 }
 
