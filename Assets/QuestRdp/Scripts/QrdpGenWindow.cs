@@ -8,12 +8,14 @@ public class QrdpGenWindow : MonoBehaviour
     public GameObject player;
 
     QrdpKeyboardManager keyboardManager;
+    public QrdpUiNumpad Numpad;
 
     // Start is called before the first frame update
     void Start()
     {
         keyboardManager = GetComponent<QrdpKeyboardManager>();
         Focus();
+        Numpad.OnEnter = StartConnect;
     }
 
     public void Focus()
@@ -21,7 +23,7 @@ public class QrdpGenWindow : MonoBehaviour
         keyboardManager.Focus(null, StartConnect);
     }
 
-    void StartConnect(string text)
+    public void StartConnect(string text)
     {
         var offset = new Vector3(0, 1, 3);
         var position = player.transform.position +

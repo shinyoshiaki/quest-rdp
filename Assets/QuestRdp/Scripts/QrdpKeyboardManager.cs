@@ -18,15 +18,20 @@ public class QrdpKeyboardManager : MonoBehaviour
     public delegate void IOnEnter(string s);
     IOnEnter OnEnter;
 
-    private void OnEnable()
-    {
-        keyboard.Enable();
-        keyboard.SetPlaceholderMessage("");
+    bool first = true;
 
-        keyboard.OnSubmit.AddListener(HandleSubmit);
-        keyboard.OnCancel.AddListener(HandleCancel);
-        keyboard.OnAddChar.AddListener(HandleAddChar);
-        keyboard.OnBackspace.AddListener(HandleBackspace);
+    private void Enable()
+    {
+        if (first)
+        {
+            first = false;
+            keyboard.SetPlaceholderMessage("");
+
+            keyboard.OnSubmit.AddListener(HandleSubmit);
+            keyboard.OnCancel.AddListener(HandleCancel);
+            keyboard.OnAddChar.AddListener(HandleAddChar);
+            keyboard.OnBackspace.AddListener(HandleBackspace);
+        }
     }
 
     private void OnDisable()
@@ -40,19 +45,12 @@ public class QrdpKeyboardManager : MonoBehaviour
         keyboard.Disable();
     }
 
-    private void Update()
-    {
-        if (OVRInput.GetDown(OVRInput.Button.Three))
-        {
-            SwitchKeyboard();
-        }
-    }
-
     public void SwitchKeyboard()
     {
         if (keyboard.disabled)
         {
             keyboard.Enable();
+            Enable();
         }
         else
         {
@@ -66,7 +64,7 @@ public class QrdpKeyboardManager : MonoBehaviour
         if (OnEnter != null) OnEnter(text);
 
         keyboard.DisableInput();
-        StartCoroutine(SubmitEmail(text));
+        StartCoroutine(SubmitText());
     }
 
     public void HandleAddChar(string c)
@@ -85,7 +83,7 @@ public class QrdpKeyboardManager : MonoBehaviour
         OnEnter = _OnEnter;
     }
 
-    private IEnumerator SubmitEmail(string email)
+    private IEnumerator SubmitText()
     {
         keyboard.ShowInfoMessage("");
         yield return new WaitForSeconds(0.1f);
