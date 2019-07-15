@@ -4,43 +4,66 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
 
-namespace Qrdp
+public class QrdpUiNumpad : MonoBehaviour
 {
-    public class QrdpUiNumpad : MonoBehaviour
-    {
-        // Start is called before the first frame update
-        void Start()
-        {
-            var transforms = GetComponentsInChildren<Button>();
-            var buttons = from t in transforms select t.gameObject;
-            Debug.Log(buttons.ToArray().Length + "lengt");
+    public delegate void IOnEnter(string s);
+    public IOnEnter OnEnter;
 
-            foreach (var item in buttons.Select((v, i) => new { v, i }))
+    public Text viewText;
+
+    void Start()
+    {
+        var transforms = GetComponentsInChildren<Button>();
+        var buttons = from t in transforms select t.gameObject;
+        Debug.Log(buttons.ToArray().Length + "lengt");
+
+        foreach (var item in buttons.Select((v, i) => new { v, i }))
+        {
+            var v = item.v;
+            var i = item.i;
+
+            var txt = v.GetComponentInChildren<Text>();
+            var btn = v.GetComponent<Button>();
+
+            if (i < 10)
             {
-                var txt = item.v.GetComponentInChildren<Text>();
-                var btn = item.v.GetComponent<Button>();
-       
-                if (item.i < 10)
+                txt.text = i.ToString();
+                btn.onClick.AddListener(() =>
                 {
-                    txt.text = item.i.ToString();
-                }
-                else if (item.i == 10)
-                {
-                    txt.text = ".";
-                }
-                else if (item.i == 11)
-                {
-                    txt.text = "enter";
-                }
+                    Debug.Log("num " + i);
+                    viewText.text += i.ToString();
+                });
+            }
+            else if (i == 10)
+            {
+                txt.text = ".";
+                btn.onClick.AddListener(() =>
+               {
+                   viewText.text += ".";
+               });
+            }
+            else if (i == 11)
+            {
+                txt.text = "enter";
+                btn.onClick.AddListener(() =>
+              {
+                  if (OnEnter != null) OnEnter(viewText.text);
+                  Clear();
+              });
             }
         }
+    }
 
-        // Update is called once per frame
-        void Update()
-        {
+    public void Clear()
+    {
+        viewText.text = "";
+    }
 
-        }
+    public void Backspace()
+    {
+        viewText.text = viewText.text.Substring(0, viewText.text.Length - 1);
     }
 }
+
 
 
