@@ -23,8 +23,7 @@ const Cast: FC = () => {
   };
 
   const onStream = async (stream: MediaStream) => {
-    console.log("stream");
-    const peer = await create("room", stream);
+    const peer = await create(stream);
     setmsg("接続完了");
     setpeer(peer);
 

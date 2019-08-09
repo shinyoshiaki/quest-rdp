@@ -1,27 +1,23 @@
 import WebRTC from "webrtc4me";
 import { observer, action } from "../../server/signaling";
 
-export function create(roomId: string, stream?: MediaStream) {
+export function create(stream: MediaStream) {
   return new Promise<WebRTC>(async resolve => {
     const rtc = new WebRTC({ trickle: true, stream });
 
-    observer.subscribe(action => {
-      console.log(action);
-      switch (action.type) {
+    observer.subscribe(({ type, payload }) => {
+      switch (type) {
         case "join":
           rtc.makeOffer();
           break;
         case "sdp":
-          const sdp = action.payload;
+          const sdp = payload;
           rtc.setSdp(sdp);
           break;
       }
     });
 
-    rtc.onSignal.subscribe((session: any) => {
-      console.log({ session });
-      const { type, sdp, ice } = session;
-
+    rtc.onSignal.subscribe(({ type, sdp, ice }) => {
       if (sdp) {
         const data = type + "%" + sdp;
         action.execute({ type: "offer", payload: data });
@@ -34,7 +30,6 @@ export function create(roomId: string, stream?: MediaStream) {
     });
 
     rtc.onConnect.once(() => {
-      console.log("connect");
       resolve(rtc);
     });
 
