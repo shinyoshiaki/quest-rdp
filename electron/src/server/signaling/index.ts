@@ -3,7 +3,7 @@ import Event from "rx.mini";
 const load = (window as any).require;
 const WS: typeof WS_ = load("ws");
 
-type Action = { type: string; payload: string };
+type Action = { type: string; payload: any };
 
 const action = new Event<Action>();
 const observer = new Event<Action>();

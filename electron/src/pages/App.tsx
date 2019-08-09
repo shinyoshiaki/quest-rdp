@@ -9,7 +9,7 @@ import Reload from "../components/reload";
 import { getScreen } from "../domain/screen/screen";
 import styled from "styled-components";
 import Audio from "../components/audio";
-import WebRTC from "../lib/webrtc";
+import WebRTC from "webrtc4me";
 
 const Cast: FC = () => {
   const [screenStream, setscreenStream] = useState<MediaStream>();
@@ -36,7 +36,7 @@ const Cast: FC = () => {
           moveMouse.execute(data.payload);
           break;
         case "click":
-          clickMouse.execute();
+          clickMouse.execute(null);
           break;
         case "key":
           keyTap.execute(data.payload);

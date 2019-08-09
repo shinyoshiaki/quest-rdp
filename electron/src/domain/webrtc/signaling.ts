@@ -1,4 +1,4 @@
-import WebRTC from "../../lib/webrtc";
+import WebRTC from "webrtc4me";
 import { observer, action } from "../../server/signaling";
 
 export function create(roomId: string, stream?: MediaStream) {

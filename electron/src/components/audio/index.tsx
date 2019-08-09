@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import useActive from "../../hooks/useActive";
-import WebRTC from "../../lib/webrtc";
+import WebRTC from "webrtc4me";
 
 const framesPerPacket = 2048;
 
